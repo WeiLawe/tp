@@ -1,5 +1,6 @@
 <?php
 namespace app\home\controller;
+use think\Db;
 use think\Request;
 use app\home\model\Document;
 /**
@@ -11,15 +12,27 @@ class Article extends Home {
     /* 文档模型频道页 */
 	public function index(){
 		/* 分类信息 */
-		$category = $this->category();
-
+		$category = $this->category()->toArray();
+//        dump($category[id]);die;
 		//频道页只显示模板，默认不读取任何内容
 		//内容可以通过模板标签自行定制
 
 		/* 模板赋值并渲染模板 */
 		$this->assign('category', $category);
-		return $this->fetch($category['template_index']);
+//		return $this->fetch($category['template_index']);
+        $list=Db::name('document')->where('category_id',$category[id])->select();
+//        dump($list);die;
+        $this->assign('list',$list);
+        return $this->fetch('lists');
 	}
+
+    /*
+     * 活动详情页
+     */
+    public function notice()
+    {
+
+    }
 
 	/* 文档模型列表页 */
 	public function lists($p = 1){
@@ -41,15 +54,15 @@ class Article extends Home {
 	}
 
 	/* 文档模型详情页 */
-	public function detail($id = 0, $p = 1){
+	public function detail($id = 0){
 		/* 标识正确性检测 */
 		if(!($id && is_numeric($id))){
 			$this->error('文档ID错误！');
 		}
 
-		/* 页码检测 */
-		$p = intval($p);
-		$p = empty($p) ? 1 : $p;
+//		/* 页码检测 */
+//		$p = intval($p);
+//		$p = empty($p) ? 1 : $p;
 
 		/* 获取详细信息 */
 		$Document = new Document();
@@ -67,13 +80,14 @@ class Article extends Home {
 		} else { //使用默认模板
 			$tmpl = 'article/'. get_document_model($info['model_id'],'name') .'/detail';
 		}
+//		dump($tmpl);die;
 		/* 更新浏览数 */
 		$map = array('id' => $id);
 		$Document->where($map)->setInc('view');
 		/* 模板赋值并渲染模板 */
 		$this->assign('category', $category);
 		$this->assign('info', $info);
-		$this->assign('page', $p); //页码
+//		$this->assign('page', $p); //页码
 		return $this->fetch($tmpl);
 	}
 

@@ -1,3 +1,4 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:68:"E:\www\tp\public/../application/home/view/default/article\lists.html";i:1526368538;}*/ ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -44,20 +45,20 @@
 	<!--导航结束-->
 
 	<div class="container-fluid">
-		{volist name="list" id="notice"}
+		<?php if(is_array($list) || $list instanceof \think\Collection || $list instanceof \think\Paginator): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$notice): $mod = ($i % 2 );++$i;?>
 		<div class="row noticeList">
-			<a href="{:url('article/detail?id='.$notice[id])}">
+			<a href="<?php echo url('article/detail?id='.$notice[id]); ?>">
 				<div class="col-xs-2">
 					<img class="noticeImg" src="/image/1.png" />
 				</div>
 				<div class="col-xs-10">
-					<p class="title">{$notice.title}</p>
-					<p class="intro">{$notice.description}</p>
-					<p class="info">浏览:{$notice.view} <span class="pull-right">{$notice.create_time|date="Y-m-d H:i:s",###}</span> </p>
+					<p class="title"><?php echo $notice['title']; ?></p>
+					<p class="intro"><?php echo $notice['description']; ?></p>
+					<p class="info">浏览:<?php echo $notice['view']; ?> <span class="pull-right"><?php echo date("Y-m-d H:i:s",$notice['create_time']); ?></span> </p>
 				</div>
 			</a>
 		</div>
-		{/volist}
+		<?php endforeach; endif; else: echo "" ;endif; ?>
 	</div>
 </div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

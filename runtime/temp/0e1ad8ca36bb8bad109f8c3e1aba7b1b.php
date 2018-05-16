@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:66:"E:\www\tp\public/../application/user/view/default/login\index.html";i:1526262835;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:66:"E:\www\tp\public/../application/user/view/default/login\index.html";i:1526268150;}*/ ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 
@@ -75,7 +75,7 @@
                 </div>
                 <div class="control-group">
                     <div class="controls">
-                        <label class="control-label" for="inputCheckbox">自动登陆</label>
+                        <label class="control-label" for="inputCheckbox">用户名</label>
 
                         <input type="checkbox" id="inputCheckbox">
 
